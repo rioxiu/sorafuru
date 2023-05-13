@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
+	"sorafuru/handlers"
 	"sorafuru/user"
 
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,16 +21,15 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+	userHandler := handlers.NewUserHandlers(userService)
 
-	userInput := user.RegisterUserInput{}
+	//router
+	router := gin.Default()
+	api := router.Group("/api/v1")
+	api.POST("/users", userHandler.RegisterUser)
 
-	userInput.Fullname = "Pavolia Reine"
-	userInput.Email = "pavoliareine@hololive.id"
-	userInput.Password = "merakpalingmegahwoi"
-	userInput.Occupation = "Vtuber"
-
-	userService.RegisterUser(userInput)
+	router.Run()
 
 	// userRepository.Save(user)
-	fmt.Println("insert data berhasil")
+	fmt.Println(userHandler)
 }
