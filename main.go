@@ -23,6 +23,20 @@ func main() {
 	userService := user.NewService(userRepository)
 	userHandler := handlers.NewUserHandlers(userService)
 
+	userByEmail, err := userRepository.FindByEmail("riosiu@icloud.com")
+
+	if err != nil {
+		fmt.Println("error", err.Error())
+
+	}
+
+	if userByEmail.ID == 0 {
+		fmt.Println("user not found")
+	} else {
+
+		fmt.Println(userByEmail.Fullname)
+	}
+
 	//router
 	router := gin.Default()
 	api := router.Group("/api/v1")
