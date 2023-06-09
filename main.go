@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	dsn := "root:polo1028@tcp(127.0.0.1:3305)/sorafuru?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:riosiu@tcp(127.0.0.1:3306)/sorafuru?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
@@ -23,7 +23,7 @@ func main() {
 	userService := user.NewService(userRepository)
 	userHandler := handlers.NewUserHandlers(userService)
 
-	userByEmail, err := userRepository.FindByEmail("riosiu@icloud.com")
+	userByEmail, err := userRepository.FindByEmail("rioxiu@icloud.com") //mencari email yang ada di database
 
 	if err != nil {
 		fmt.Println("error", err.Error())
@@ -34,7 +34,7 @@ func main() {
 		fmt.Println("user not found")
 	} else {
 
-		fmt.Println(userByEmail.Fullname)
+		fmt.Println(userByEmail.Name)
 	}
 
 	//router

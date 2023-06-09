@@ -2,7 +2,7 @@ package user
 
 type UserFormatter struct {
 	ID         int    `json:"id"`
-	Fullname   string `json:"fullname"`
+	Name       string `json:"name"`
 	Occupation string `json:"occupation"`
 	Email      string `json:"email"`
 	Token      string `json:"token"`
@@ -11,7 +11,7 @@ type UserFormatter struct {
 func FormatUser(user User, token string) UserFormatter {
 	formatter := UserFormatter{
 		ID:         user.ID,
-		Fullname:   user.Fullname,
+		Name:       user.Name,
 		Occupation: user.Occupation,
 		Email:      user.Email,
 		Token:      token,
