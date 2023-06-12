@@ -19,28 +19,16 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	//user service dan handler
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 	userHandler := handlers.NewUserHandlers(userService)
 
-	userByEmail, err := userRepository.FindByEmail("rioxiu@icloud.com") //mencari email yang ada di database
-
-	if err != nil {
-		fmt.Println("error", err.Error())
-
-	}
-
-	if userByEmail.ID == 0 {
-		fmt.Println("user not found")
-	} else {
-
-		fmt.Println(userByEmail.Name)
-	}
-
 	//router
 	router := gin.Default()
 	api := router.Group("/api/v1")
-	api.POST("/users", userHandler.RegisterUser)
+	api.POST("/register", userHandler.RegisterUser)
+	api.GET("/login", userHandler.LoginUser)
 
 	router.Run()
 
