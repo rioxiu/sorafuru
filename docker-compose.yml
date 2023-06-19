@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mariadb:
+    networks:
+      - backend
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: otsukeris
+      MYSQL_DATABASE: sorafurux
+      MYSQL_USER: rioxiu
+      MYSQL_PASSWORD: otsukeris
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - ./data:/var/lib/mysql
+networks:
+  backend:
+    driver: bridge
