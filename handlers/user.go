@@ -79,7 +79,6 @@ func (h *userHandler) LoginUser(c *gin.Context) {
 	formatter := user.FormatUser(loggedInUser, "tokenkuy")
 	response := helpers.APIResponse("Successfuly loggedin", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
-
 }
 
 func (h *userHandler) CheckingEmail(c *gin.Context) {
@@ -123,5 +122,18 @@ func (h *userHandler) CheckingEmail(c *gin.Context) {
 
 	response := helpers.APIResponse(metaMassage, http.StatusOK, "success", data)
 	c.JSON(http.StatusOK, response)
+
+}
+
+func (h *userHandler) AvatarHandlers(c *gin.Context) {
+	//input dari user
+	//gambar akan di simpan ke folder "images"
+	// services akan memanggil repository
+	// menggunakan jwt sebagai validasi
+	// repo ambil data user yang id nya di dapat dari jwt
+	// repo update data user simpan lokasi file
+	// return api response
+
+	// c.SaveUploadedFile()
 
 }
