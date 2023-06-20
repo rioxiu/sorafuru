@@ -49,5 +49,5 @@ func main() {
 	router.Run()
 
 	// userRepository.Save(user)
-	fmt.Println(userHandler)
+	// fmt.Println(userHandler)
 }
