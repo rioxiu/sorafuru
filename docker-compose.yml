@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: otsukeris
-      MYSQL_DATABASE: sorafurux
+      MYSQL_DATABASE: sorafuru
       MYSQL_USER: rioxiu
       MYSQL_PASSWORD: otsukeris
     ports:
