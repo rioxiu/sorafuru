@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"sorafuru/helpers"
 	"sorafuru/user"
@@ -141,8 +142,13 @@ func (h *userHandler) AvatarHandlers(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+	//pengganti JWT TOKEN
+	userID := 1
 
-	path := "images/" + file.Filename
+	// lokasi simpan path gambar
+	// path := "assets/avatars/" + file.Filename
+	path := fmt.Sprintf("assets/avatars/%d-%s", userID, file.Filename)
+
 	err = c.SaveUploadedFile(file, path)
 	if err != nil {
 		data := gin.H{"is_uploaded": false}
@@ -150,8 +156,6 @@ func (h *userHandler) AvatarHandlers(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-
-	userID := 1
 
 	_, err = h.userService.SaveAvatar(userID, path)
 	if err != nil {
