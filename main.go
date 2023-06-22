@@ -37,16 +37,15 @@ func main() {
 	//user service dan handler
 	userRepository := user.NewRepository(dbConnection)
 	userService := user.NewService(userRepository)
-
 	userHandler := handlers.NewUserHandlers(userService)
-	userService.SaveAvatar(1, "images/1.jpg")
 
-	//router
+	//router (yang diambil dari handlers )
 	router := gin.Default()
 	api := router.Group("/api/v1")
 	api.POST("/register", userHandler.RegisterUser)
 	api.GET("/login", userHandler.LoginUser)
 	api.POST("/check-email", userHandler.CheckingEmail)
+	api.POST("/avatars", userHandler.AvatarHandlers)
 
 	router.Run()
 

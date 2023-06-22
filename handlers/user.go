@@ -134,6 +134,34 @@ func (h *userHandler) AvatarHandlers(c *gin.Context) {
 	// repo update data user simpan lokasi file
 	// return api response
 
-	// c.SaveUploadedFile()
+	file, err := c.FormFile("avatars")
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helpers.APIResponse("Failed uploaded avatar", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
 
+	path := "images/" + file.Filename
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helpers.APIResponse("Failed uploaded avatar", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	userID := 1
+
+	_, err = h.userService.SaveAvatar(userID, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helpers.APIResponse("Failed uploaded avatar", http.StatusBadRequest, "error", data)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	data := gin.H{"is_uploaded": true}
+	response := helpers.APIResponse("Success uploaded avatar", http.StatusOK, "success", data)
+	c.JSON(http.StatusOK, response)
 }

@@ -86,34 +86,22 @@ func (s *service) CheckEmail(input CheckEmailInput) (bool, error) {
 	return false, nil
 }
 
-func (s *service) SaveAvatar(ID int, fileLocation string) *UserResult {
+func (s *service) SaveAvatar(ID int, fileLocation string) (User, error) {
+
 	// mencari user berdasarkan ID yang tersimpan
 	// update attribute avatar file name
 	// simpan perubahan avatar file name
 
 	user, err := s.repository.FindById(ID)
 	if err != nil {
-		return &UserResult{
-			User: &user,
-			Err:  err,
-		}
+		return user, err
 	}
 
 	user.Avatar_filename = fileLocation
 	updatedUser, err := s.repository.Update(user)
 	if err != nil {
-		return &UserResult{
-			User: &updatedUser,
-			Err:  err,
-		}
+		return updatedUser, err
 	}
 
-	return nil
-
-	// user.Avatar_filename = fileLocation
-	// updatedUser, err := s.repository.Update(user)
-	// if err != nil {
-	// 	return updatedUser, err
-	// }
-	// return updatedUser, nil
+	return updatedUser, nil
 }
