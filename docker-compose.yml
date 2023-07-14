@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: DB_PASSWORD
-      MYSQL_DATABASE: sorafuru
+      MYSQL_DATABASE: DB_NAME
       MYSQL_USER: DB_USERNAME
       MYSQL_PASSWORD: DB_PASSWORD
     ports:
