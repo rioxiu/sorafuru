@@ -1,22 +1,39 @@
 package auth
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"os"
+
+	"github.com/dgrijalva/jwt-go"
 )
-type Services struct{
+
+type Services interface {
+	// GenerateToken(userID int) (string, error)
 	GenerateToken(userID int) (string, error)
 }
 
-type jwtServices struct{}
+type jwtServices struct {
+}
 
-key := os.Getenv("SECRET_KEY")
-var SecretKey []byte(key)
+func NewService() *jwtServices {
+	return &jwtServices{}
+}
 
-func (s* jwtServices) GenerateToken (userID int) (string, error){
+var SecretKey []byte
+
+func (s *jwtServices) GenerateToken(userID int) (string, error) {
 	claim := jwt.MapClaims{}
-	claim("user_id") = userID
+	claim["user_id"] = userID
 
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claim)
-	
+	key := os.Getenv("SECRET_KEY")
+	SecretKey = []byte(key)
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	token.SignedString(SecretKey)
+
+	signedToken, err := token.SignedString(SecretKey)
+
+	if err != nil {
+		return signedToken, err
+	}
+	return signedToken, nil
 }

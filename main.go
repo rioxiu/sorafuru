@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sorafuru/auth"
 	"sorafuru/handlers"
 	"sorafuru/user"
 
@@ -34,10 +35,12 @@ func main() {
 		log.Fatal("Error connecting to the database:", err)
 	}
 
-	//user service dan handler
+	//user service, auth services and handlers //
 	userRepository := user.NewRepository(dbConnection)
 	userService := user.NewService(userRepository)
-	userHandler := handlers.NewUserHandlers(userService)
+	authService := auth.NewService()
+
+	userHandler := handlers.NewUserHandlers(userService, authService)
 
 	//router (yang diambil dari handlers )
 	router := gin.Default()
