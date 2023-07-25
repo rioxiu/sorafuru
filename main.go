@@ -55,3 +55,11 @@ func main() {
 	// userRepository.Save(user)
 	// fmt.Println(userHandler)
 }
+
+/*
+	membuat middleware
+	1. membuat header authorization : dengan bearer token
+	2. header authorization sebagai tempat token
+	3. validasi token yang didapatkan
+	4. jika token valid, maka akan di cek user id nya yang diambil dari database dan service utama
+*/
