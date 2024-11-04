@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"sorafuru/auth"
+	models "sorafuru/db"
 	"sorafuru/handlers"
 	"sorafuru/user"
 
@@ -33,6 +34,16 @@ func main() {
 	dbConnection, err := gorm.Open(mysql.Open(dbConnectstring), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Error connecting to the database:", err)
+	}
+
+	models := []interface{}{
+		&models.UserDB{},
+	}
+
+	err = dbConnection.AutoMigrate(models...)
+	if err != nil {
+		log.Fatal("Error migrating database:", err)
+
 	}
 
 	//user service, auth services and handlers //
